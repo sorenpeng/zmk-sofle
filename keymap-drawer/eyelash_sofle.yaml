@@ -104,7 +104,7 @@ layers:
   - '6'
   - +
   - '*'
-  - $$mdi:backspace-reverse-outline$$
+  - {t: '$$mdi:backspace$$', type: backspace}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '[', s: '{'}
@@ -155,8 +155,8 @@ layers:
   - PG DN
   - PG UP
   - END
-  - CALCULATOR
-  - {t: '$$mdi:transfer$$', type: trans}
+  - AL CALCULATOR
+  - $$mdi:apple-keyboard-caps$$
   - {t: '$$mdi:transfer$$', type: trans}
   - RGB SPD
   - $$mdi:skip-previous$$
@@ -169,7 +169,7 @@ layers:
   - $$mdi:arrow-up-bold$$
   - $$mdi:arrow-right-bold$$
   - PRINTSCREEN
-  - $$mdi:apple-keyboard-caps$$
+  - $$mdi:backspace-reverse-outline$$
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - RGB HUD

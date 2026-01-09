@@ -45,14 +45,12 @@
             bindings = <&kp>, <&kp>;
         };
 
-        mod_tap_layer_preferred: mod_tap_layer_preferred {
+        lt_layer_preferred: layout_tap_layer_preferred {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <200>;
-            bindings = <&lt>, <&kp>;
-
-            label = "MOD_TAP_LAYER_PREFERRED";
+            bindings = <&mo>, <&kp>;
         };
     };
 
@@ -66,7 +64,7 @@
 &td_caps_word             &kp Q                  &kp W         &kp E         &kp R                             &kp T                   &trans  &kp Y                     &kp U         &kp I         &kp O         &kp P                           &kp BACKSLASH
 &mt LEFT_SHIFT BACKSPACE  &kp A                  &kp S         &kp D         &kp F                             &kp G                   &trans  &kp H                     &kp J         &kp K         &kp L         &kp SEMICOLON                   &mt RIGHT_SHIFT SINGLE_QUOTE
 &kp LEFT_GUI              &mt_z_pref LEFT_ALT Z  &kp X         &kp C         &kp V                             &kp B                   &trans  &kp N                     &kp M         &kp COMMA     &kp PERIOD    &mt_slash_pref RIGHT_ALT SLASH  &kp RIGHT_CONTROL
-&trans                    &trans                 &trans        &trans        &mod_tap_layer_preferred 1 ENTER  &mt LEFT_CONTROL TAB    &trans  &mt LEFT_SHIFT BACKSPACE  &lt 2 SPACE   &trans        &trans        &trans
+&trans                    &trans                 &trans        &trans        &lt_layer_preferred 1 ENTER       &mt LEFT_CONTROL TAB    &trans  &mt LEFT_SHIFT BACKSPACE  &lt 2 SPACE   &trans        &trans        &trans
             >;
         };
 

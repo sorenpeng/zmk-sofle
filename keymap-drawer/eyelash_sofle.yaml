@@ -54,9 +54,9 @@ layers:
   - {t: /, h: '$$mdi:apple-keyboard-option$$', s: '?'}
   - $$mdi:apple-keyboard-control$$
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - Alt+Ctl+$$mdi:apple-keyboard-command$$
+  - Ins
+  - PRINTSCREEN
   - {t: '$$mdi:keyboard-return$$', h: Sym+Num}
   - {t: '$$mdi:keyboard-tab$$', h: '$$mdi:apple-keyboard-control$$'}
   - {t: '$$mdi:transfer$$', type: trans}

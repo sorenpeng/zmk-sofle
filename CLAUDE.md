@@ -1,67 +1,57 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Project Snapshot
+- Repo purpose: ZMK configuration for the Eyelash Sofle split keyboard (not the ZMK firmware source).
+- Primary editable areas: `config/` and `boards/arm/eyelash_sofle/`.
+- Treat local west workspace directories as generated state unless explicitly requested: `build/`, `zmk/`, `modules/`, `tools/`, `.west/`.
+- Keep board/shield names stable: `eyelash_sofle_left`, `eyelash_sofle_right`, `nice_view_gem`, `settings_reset`.
 
-## Project Overview
+## Commands (Authoritative)
+- Install toolchain: `mise install`
+- First-time setup: `mise run setup`
+- Sync dependencies: `mise run sync`
+- Build left: `mise run build-left`
+- Build right: `mise run build-right`
+- Build both halves: `mise run build-all`
+- Build Studio (left/central): `mise run build-left-studio`
+- Clean local artifacts: `mise run clean`
+- Regenerate keymap SVG: `keymap-drawer -c keymap_drawer.config.yaml`
 
-ZMK firmware configuration for the **Eyelash Sofle** split ergonomic keyboard running on nRF52840 MCUs. This is a personal configuration repository, not the ZMK firmware source itself.
+Direct west commands (when needed):
+- `west build -s zmk/app -d build/left -b eyelash_sofle_left -- -DSHIELD=eyelash_sofle_left -DZMK_CONFIG=$PWD/config`
+- `west build -s zmk/app -d build/right -b eyelash_sofle_right -- -DSHIELD=eyelash_sofle_right -DZMK_CONFIG=$PWD/config`
 
-## Build Commands
+## Validation
+- There is no automated unit test suite.
+- Primary verification is successful build of both halves.
+- Expected artifacts:
+  - `build/left/zephyr/zmk.uf2`
+  - `build/right/zephyr/zmk.uf2`
+  - `build/left-studio/zephyr/zmk.uf2` (Studio build)
+- If keymap changes, regenerate and review `keymap-drawer/eyelash_sofle.svg`.
 
-```bash
-# Initialize workspace (first time only)
-west init -l config
-west update
+## Code Style (Repo-Specific)
+- Use 4-space indentation in `.keymap` and `.dts/.dtsi`.
+- Keep `bindings = < ... >;` columns aligned for readability.
+- Behavior and helper identifiers use lower snake case (example: `mt_z_pref`).
+- Behavior labels use uppercase (example: `TD_CAPS_WORD`).
+- `.conf` files should only contain `CONFIG_...` entries with concise comments.
 
-# Build left half
-west build -d build/left -b eyelash_sofle_left -- -DSHIELD=eyelash_sofle_left
+## Architecture and Boundaries
+- `config/eyelash_sofle.keymap`: layers, combos, custom behaviors.
+- `config/eyelash_sofle.conf`: shared feature flags (display, RGB, power, HID).
+- `config/eyelash_sofle_left.conf`: left/central-only options (for example ZMK Studio).
+- `boards/arm/eyelash_sofle/*.dts*`: hardware mapping, matrix, transforms, encoder.
+- `config/west.yml`: module and dependency pins.
+  - `zmk` is pinned to `v0.3.0`.
+  - `nice-view-gem` is pinned to commit `7794ebf` for LVGL v8 compatibility.
 
-# Build right half
-west build -d build/right -b eyelash_sofle_right -- -DSHIELD=eyelash_sofle_right
+## Workflow and Repo Etiquette
+- Keep changes minimal and scoped to the requested task.
+- Common commit styles in this repo: `[Draw] ...`, `Updated ...`, `Update ...`, `fix(scope): ...`.
+- For keymap changes, include the corresponding `keymap-drawer/eyelash_sofle.svg` update in the same change.
 
-# Clean build (if needed)
-west build -d build/left -b eyelash_sofle_left -p -- -DSHIELD=eyelash_sofle_left
-```
-
-Output: `build/left/zephyr/zmk.uf2` and `build/right/zephyr/zmk.uf2`
-
-## Architecture
-
-### Key Directories
-- `config/` - User configuration (keymap, features, west manifest)
-- `boards/arm/eyelash_sofle/` - Hardware board definitions (device tree, Kconfig)
-- `keymap-drawer/` - Auto-generated SVG keymap visualizations (via GitHub Actions)
-
-### Configuration Files
-- `config/eyelash_sofle.keymap` - Primary keymap definition (layers, combos, behaviors)
-- `config/eyelash_sofle.conf` - Feature toggles (RGB, display, power management)
-- `config/west.yml` - Dependency manifest (ZMK, nice-view-gem, mario peripheral)
-- `boards/arm/eyelash_sofle/eyelash_sofle.dtsi` - Shared hardware configuration
-- `boards/arm/eyelash_sofle/*_left.dts` / `*_right.dts` - Split-specific hardware
-
-### Layer Structure (in keymap)
-- Layer 0: Main QWERTY with mod-tap behaviors
-- Layer 1: Symbols, numbers, F-keys
-- Layer 2: Bluetooth/system controls, RGB, media
-- Layer 3: Gaming mode
-
-### Split Configuration
-- Left half = Central (USB + Bluetooth, main logic)
-- Right half = Peripheral (Bluetooth only to left half)
-
-## ZMK Device Tree Syntax
-
-Keymaps use ZMK's device tree bindings:
-- `&kp KEY` - Standard keypress
-- `&mo LAYER` - Momentary layer
-- `&lt LAYER KEY` - Layer-tap (hold=layer, tap=key)
-- `&mt MOD KEY` - Mod-tap (hold=modifier, tap=key)
-- `&trans` - Transparent (pass to lower layer)
-- `&none` - No action
-
-Behaviors are defined in `/ { behaviors { ... } }` blocks with custom timing parameters.
-
-## GitHub Actions
-
-- `build.yml` - Compiles firmware on push, uploads UF2 artifacts
-- `draw.yml` - Regenerates keymap SVG diagrams when config changes
+## Gotchas
+- Left half is central (USB/BLE + Studio); right half is peripheral.
+- CI includes fallback logic from `nice_view_gem` to `nice_view`; avoid unnecessary renames of board/shield identifiers.
+- Avoid broad refactors across layout/behavior blocks unless explicitly requested.

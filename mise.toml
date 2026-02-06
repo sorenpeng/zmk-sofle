@@ -1,0 +1,42 @@
+[tools]
+python = "3.12"
+cmake = "3.30"
+ninja = "1.12"
+"pipx:west" = "1"
+
+[tasks.setup]
+description = "Initialize local west workspace and Python dependencies"
+run = [
+  "if [ ! -d .west ]; then west init -l config; fi",
+  "west update",
+  "west zephyr-export",
+  "west packages pip --install",
+]
+
+[tasks.sync]
+description = "Refresh west dependencies and Python packages"
+run = [
+  "west update",
+  "west zephyr-export",
+  "west packages pip --install",
+]
+
+[tasks.build-left]
+description = "Build left firmware"
+run = "west build -s zmk/app -d build/left -b eyelash_sofle_left -- -DSHIELD=eyelash_sofle_left -DZMK_CONFIG=$PWD/config"
+
+[tasks.build-right]
+description = "Build right firmware"
+run = "west build -s zmk/app -d build/right -b eyelash_sofle_right -- -DSHIELD=eyelash_sofle_right -DZMK_CONFIG=$PWD/config"
+
+[tasks.build-all]
+description = "Build left and right firmware"
+depends = ["build-left", "build-right"]
+
+[tasks.build-left-studio]
+description = "Build left firmware with studio-rpc-usb-uart snippet"
+run = "west build -s zmk/app -d build/left-studio -b eyelash_sofle_left -S studio-rpc-usb-uart -- -DSHIELD=eyelash_sofle_left -DZMK_CONFIG=$PWD/config -DCONFIG_ZMK_STUDIO_LOCKING=n"
+
+[tasks.clean]
+description = "Remove local build artifacts"
+run = "rm -rf build/left build/right build/left-studio"

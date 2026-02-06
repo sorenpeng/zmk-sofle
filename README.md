@@ -58,22 +58,59 @@
 - **`keymap-drawer/`**: 存放 `keymap-drawer` 生成的布局图和相关配置文件。
 - **`zephyr/`**: Zephyr RTOS 模块定义文件。
 
+## 🤖 Agent 文档约定
+
+- **`CLAUDE.md`**: 面向 Claude Code 的唯一项目规则真源（Single Source of Truth）。
+- **`AGENTS.md`**: 仅保留 `CLAUDE.md` 指向，用于兼容不同 Agent 入口。
+- 修改 Agent 协作规则时，请优先更新 `CLAUDE.md`。
+
 ## 🛠️ 构建与刷写 (Build & Flash)
 
-您需要安装 `west` 工具来构建固件。
+推荐使用 `mise` 统一管理本地工具链和构建任务（GitHub Actions 编译流程保持不变）。
 
-1.  **设置 ZMK 环境**:
-    请参考 [ZMK 官方文档](https://zmk.dev/docs/user-setup) 进行环境配置。
-
-2.  **构建固件**:
-    在项目根目录运行以下命令来构建左手和右手的固件：
+1. **安装工具链**:
+    在项目根目录执行：
     ```bash
-    west build -d build/left -b eyelash_sofle_left -- -DSHIELD=eyelash_sofle_left
-    west build -d build/right -b eyelash_sofle_right -- -DSHIELD=eyelash_sofle_right
+    mise install
     ```
 
-3.  **刷写固件**:
-    将控制器置于引导加载程序模式，然后将生成的 `.uf2` 文件（位于 `build/left` 和 `build/right` 目录中）复制到控制器上。
+2. **首次初始化 ZMK workspace**:
+    ```bash
+    mise run setup
+    ```
+
+3. **构建固件**:
+    ```bash
+    # 编译左右手
+    mise run build-all
+
+    # 或分别编译
+    mise run build-left
+    mise run build-right
+
+    # 左手 Studio 版本
+    mise run build-left-studio
+    ```
+
+4. **清理本地产物**:
+    ```bash
+    mise run clean
+    ```
+
+5. **刷写固件**:
+    将控制器置于引导加载程序模式，然后将 `.uf2` 文件复制到控制器：
+    - `build/left/zephyr/zmk.uf2`
+    - `build/right/zephyr/zmk.uf2`
+    - Studio 构建使用 `build/left-studio/zephyr/zmk.uf2`
+
+> `build/` 目录已加入 `.gitignore`，本地编译产物不会被提交。
+
+如果需要直接调试 `west` 命令，可使用以下等价命令：
+
+```bash
+west build -s zmk/app -d build/left -b eyelash_sofle_left -- -DSHIELD=eyelash_sofle_left -DZMK_CONFIG=$PWD/config
+west build -s zmk/app -d build/right -b eyelash_sofle_right -- -DSHIELD=eyelash_sofle_right -DZMK_CONFIG=$PWD/config
+```
 
 ## 🗺️ 键盘布局图 (Keymap Drawer)
 

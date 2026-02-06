@@ -57,14 +57,14 @@ layers:
   - Alt+Ctl+$$mdi:apple-keyboard-command$$
   - Ins
   - PRINTSCREEN
-  - {t: '$$mdi:keyboard-return$$', h: Sym+Num}
   - {t: '$$mdi:keyboard-tab$$', h: '$$mdi:apple-keyboard-control$$'}
+  - {t: '$$mdi:keyboard-return$$', h: Sym+Num}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:backspace$$', h: '$$mdi:apple-keyboard-shift$$'}
   - {t: '$$mdi:keyboard-space$$', h: Brd+Sys}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - Ctl+$$mdi:keyboard-space$$
+  - {t: Ctl+Sft+-, s: Ctl+Sft+_}
+  - Ctl+Z
   Sym+Num:
   - $$mdi:keyboard-esc$$
   - F1
@@ -86,9 +86,9 @@ layers:
   - $
   - '%'
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '7', s: '&'}
-  - {t: '8', s: '*'}
-  - {t: '9', s: (}
+  - '7'
+  - '8'
+  - '9'
   - {t: '-', s: _}
   - {t: /, s: '?'}
   - F12
@@ -100,7 +100,7 @@ layers:
   - )
   - {t: '$$mdi:transfer$$', type: trans}
   - '4'
-  - {t: '5', s: '%'}
+  - '5'
   - '6'
   - +
   - '*'
@@ -122,8 +122,8 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
+  - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - '0'

@@ -6,14 +6,9 @@ manifest:
       # See:
       # - https://zmk.dev/docs/features/modules
       # - https://docs.zephyrproject.org/3.5.0/develop/west/manifest.html#projects
-    - name: gpeye
-      url-base: https://github.com/GPeye
     - name: m165437
       url-base: https://github.com/M165437
   projects:
-    - name: mario-peripheral-animation
-      remote: gpeye
-      revision: main
     - name: nice-view-gem
       remote: m165437
       revision: 7794ebf    # last commit compatible with ZMK v0.3.0 (LVGL v8)

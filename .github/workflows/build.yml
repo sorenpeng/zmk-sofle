@@ -7,4 +7,138 @@ on:
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3.0
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: eyelash_sofle_right
+            shield: nice_view_gem
+          - board: eyelash_sofle_left
+            shield: nice_view_gem
+            snippet: studio-rpc-usb-uart
+            cmake-args: -DCONFIG_ZMK_STUDIO_LOCKING=n
+            artifact-name: eyelash_sofle_studio_left
+          - board: eyelash_sofle_left
+            shield: settings_reset
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize workspace
+        run: |
+          west init -l config
+          west update
+
+      - name: Build firmware
+        run: |
+          SHIELD_ARG=""
+          if [ -n "${{ matrix.shield }}" ]; then
+            SHIELD_ARG="-DSHIELD=${{ matrix.shield }}"
+          fi
+          SNIPPET_ARG=""
+          if [ -n "${{ matrix.snippet }}" ]; then
+            SNIPPET_ARG="-S ${{ matrix.snippet }}"
+          fi
+          CMAKE_ARG=""
+          if [ -n "${{ matrix.cmake-args }}" ]; then
+            CMAKE_ARG="${{ matrix.cmake-args }}"
+          fi
+          west build -s zmk/app -p -b ${{ matrix.board }} -- $SHIELD_ARG $CMAKE_ARG $SNIPPET_ARG
+
+      - name: Determine artifact name
+        id: artifact
+        run: |
+          if [ -n "${{ matrix.artifact-name }}" ]; then
+            echo "name=${{ matrix.artifact-name }}" >> $GITHUB_OUTPUT
+          else
+            echo "name=${{ matrix.board }}-${{ matrix.shield }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact.outputs.name }}
+          path: build/zephyr/zmk.uf2
+
+  fallback:
+    if: failure()
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: eyelash_sofle_right
+            shield: nice_view
+          - board: eyelash_sofle_left
+            shield: nice_view
+            snippet: studio-rpc-usb-uart
+            cmake-args: -DCONFIG_ZMK_STUDIO_LOCKING=n
+            artifact-name: eyelash_sofle_studio_left-fallback
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Patch config for fallback (remove nice-view-gem dependency)
+        run: |
+          # Remove nice-view-gem project from west.yml
+          sed -i '/- name: nice-view-gem/,/revision:/d' config/west.yml
+          # Remove m165437 remote if no other projects use it
+          sed -i '/- name: m165437/,/url-base:.*/d' config/west.yml
+          # Remove nice-view-gem specific config lines
+          sed -i '/CONFIG_NICE_VIEW_GEM_ANIMATION/d' config/eyelash_sofle.conf
+          sed -i '/CONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM/d' config/eyelash_sofle.conf
+
+      - name: Initialize workspace
+        run: |
+          west init -l config
+          west update
+
+      - name: Build firmware (fallback)
+        run: |
+          SHIELD_ARG=""
+          if [ -n "${{ matrix.shield }}" ]; then
+            SHIELD_ARG="-DSHIELD=${{ matrix.shield }}"
+          fi
+          SNIPPET_ARG=""
+          if [ -n "${{ matrix.snippet }}" ]; then
+            SNIPPET_ARG="-S ${{ matrix.snippet }}"
+          fi
+          CMAKE_ARG=""
+          if [ -n "${{ matrix.cmake-args }}" ]; then
+            CMAKE_ARG="${{ matrix.cmake-args }}"
+          fi
+          west build -s zmk/app -p -b ${{ matrix.board }} -- $SHIELD_ARG $CMAKE_ARG $SNIPPET_ARG
+
+      - name: Determine artifact name
+        id: artifact
+        run: |
+          if [ -n "${{ matrix.artifact-name }}" ]; then
+            echo "name=${{ matrix.artifact-name }}" >> $GITHUB_OUTPUT
+          else
+            echo "name=${{ matrix.board }}-${{ matrix.shield }}-fallback" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload firmware (fallback)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact.outputs.name }}
+          path: build/zephyr/zmk.uf2
+
+  merge:
+    if: always()
+    needs: [build, fallback]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: firmware
+          pattern: "*"
+          delete-merged: true
+        continue-on-error: true

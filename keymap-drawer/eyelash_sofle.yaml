@@ -54,7 +54,7 @@ layers:
   - {t: /, h: '$$mdi:apple-keyboard-option$$', s: '?'}
   - $$mdi:apple-keyboard-control$$
   - {t: '$$mdi:transfer$$', type: trans}
-  - Alt+Ctl+$$mdi:apple-keyboard-command$$
+  - {t: 'Alt+Ctl+$$mdi:apple-keyboard-command$$', h: '$$mdi:gesture-tap-hold$$'}
   - Ins
   - PRINTSCREEN
   - {t: '$$mdi:keyboard-tab$$', h: '$$mdi:apple-keyboard-control$$'}

@@ -16,7 +16,7 @@ manifest:
       revision: main
     - name: nice-view-gem
       remote: m165437
-      revision: main
+      revision: 7794ebf    # last commit compatible with ZMK v0.3.0 (LVGL v8)
     - name: zmk
       remote: zmkfirmware
       revision: v0.3.0

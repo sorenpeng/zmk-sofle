@@ -31,6 +31,7 @@ jobs:
         run: |
           west init -l config
           west update
+          west zephyr-export
 
       - name: Build firmware
         run: |
@@ -46,7 +47,7 @@ jobs:
           if [ -n "${{ matrix.cmake-args }}" ]; then
             CMAKE_ARG="${{ matrix.cmake-args }}"
           fi
-          west build -s zmk/app -p -b ${{ matrix.board }} -- $SHIELD_ARG $CMAKE_ARG $SNIPPET_ARG
+          west build -s zmk/app -p -b ${{ matrix.board }} $SNIPPET_ARG -- -DZMK_CONFIG=$GITHUB_WORKSPACE/config $SHIELD_ARG $CMAKE_ARG
 
       - name: Determine artifact name
         id: artifact
@@ -98,6 +99,7 @@ jobs:
         run: |
           west init -l config
           west update
+          west zephyr-export
 
       - name: Build firmware (fallback)
         run: |
@@ -113,7 +115,7 @@ jobs:
           if [ -n "${{ matrix.cmake-args }}" ]; then
             CMAKE_ARG="${{ matrix.cmake-args }}"
           fi
-          west build -s zmk/app -p -b ${{ matrix.board }} -- $SHIELD_ARG $CMAKE_ARG $SNIPPET_ARG
+          west build -s zmk/app -p -b ${{ matrix.board }} $SNIPPET_ARG -- -DZMK_CONFIG=$GITHUB_WORKSPACE/config $SHIELD_ARG $CMAKE_ARG
 
       - name: Determine artifact name
         id: artifact

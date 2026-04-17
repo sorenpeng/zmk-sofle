@@ -27,13 +27,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare workspace
+        run: |
+          if [ -e zephyr/module.yml ]; then
+            BASE_DIR="$(mktemp -d)"
+            mkdir -p "$BASE_DIR/config"
+            cp -R config/. "$BASE_DIR/config/"
+            echo "BASE_DIR=$BASE_DIR" >> $GITHUB_ENV
+            echo "EXTRA_MODULES_ARG=-DZMK_EXTRA_MODULES=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          else
+            echo "BASE_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+            echo "EXTRA_MODULES_ARG=" >> $GITHUB_ENV
+          fi
+
       - name: Initialize workspace
+        working-directory: ${{ env.BASE_DIR }}
         run: |
           west init -l config
           west update
           west zephyr-export
 
       - name: Build firmware
+        working-directory: ${{ env.BASE_DIR }}
         run: |
           SHIELD_ARG=""
           if [ -n "${{ matrix.shield }}" ]; then
@@ -47,7 +62,7 @@ jobs:
           if [ -n "${{ matrix.cmake-args }}" ]; then
             CMAKE_ARG="${{ matrix.cmake-args }}"
           fi
-          west build -s zmk/app -p -b ${{ matrix.board }} $SNIPPET_ARG -- -DZMK_CONFIG=$GITHUB_WORKSPACE/config -DZMK_EXTRA_MODULES=$GITHUB_WORKSPACE $SHIELD_ARG $CMAKE_ARG
+          west build -s zmk/app -d $GITHUB_WORKSPACE/build -p -b ${{ matrix.board }} $SNIPPET_ARG -- -DZMK_CONFIG=$BASE_DIR/config $EXTRA_MODULES_ARG $SHIELD_ARG $CMAKE_ARG
 
       - name: Determine artifact name
         id: artifact
@@ -95,13 +110,28 @@ jobs:
           sed -i '/CONFIG_NICE_VIEW_GEM_ANIMATION/d' config/eyelash_sofle.conf
           sed -i '/CONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM/d' config/eyelash_sofle.conf
 
+      - name: Prepare workspace
+        run: |
+          if [ -e zephyr/module.yml ]; then
+            BASE_DIR="$(mktemp -d)"
+            mkdir -p "$BASE_DIR/config"
+            cp -R config/. "$BASE_DIR/config/"
+            echo "BASE_DIR=$BASE_DIR" >> $GITHUB_ENV
+            echo "EXTRA_MODULES_ARG=-DZMK_EXTRA_MODULES=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          else
+            echo "BASE_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+            echo "EXTRA_MODULES_ARG=" >> $GITHUB_ENV
+          fi
+
       - name: Initialize workspace
+        working-directory: ${{ env.BASE_DIR }}
         run: |
           west init -l config
           west update
           west zephyr-export
 
       - name: Build firmware (fallback)
+        working-directory: ${{ env.BASE_DIR }}
         run: |
           SHIELD_ARG=""
           if [ -n "${{ matrix.shield }}" ]; then
@@ -115,7 +145,7 @@ jobs:
           if [ -n "${{ matrix.cmake-args }}" ]; then
             CMAKE_ARG="${{ matrix.cmake-args }}"
           fi
-          west build -s zmk/app -p -b ${{ matrix.board }} $SNIPPET_ARG -- -DZMK_CONFIG=$GITHUB_WORKSPACE/config -DZMK_EXTRA_MODULES=$GITHUB_WORKSPACE $SHIELD_ARG $CMAKE_ARG
+          west build -s zmk/app -d $GITHUB_WORKSPACE/build -p -b ${{ matrix.board }} $SNIPPET_ARG -- -DZMK_CONFIG=$BASE_DIR/config $EXTRA_MODULES_ARG $SHIELD_ARG $CMAKE_ARG
 
       - name: Determine artifact name
         id: artifact

@@ -25,7 +25,7 @@ jobs:
             shield: settings_reset
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Prepare workspace
         run: |
@@ -74,7 +74,7 @@ jobs:
           fi
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.artifact.outputs.name }}
           path: build/zephyr/zmk.uf2
@@ -98,7 +98,7 @@ jobs:
             artifact-name: eyelash_sofle_studio_left-fallback
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Patch config for fallback (remove nice-view-gem dependency)
         run: |
@@ -157,7 +157,7 @@ jobs:
           fi
 
       - name: Upload firmware (fallback)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.artifact.outputs.name }}
           path: build/zephyr/zmk.uf2
@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Merge artifacts
-        uses: actions/upload-artifact/merge@v4
+        uses: actions/upload-artifact/merge@v6
         with:
           name: firmware
           pattern: "*"

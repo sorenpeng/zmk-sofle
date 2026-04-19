@@ -58,14 +58,14 @@ layers:
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:keyboard-tab$$', h: '$$mdi:apple-keyboard-command$$'}
-  - {t: '$$mdi:keyboard-return$$', h: Sym+Num}
+  - {t: '$$mdi:keyboard-return$$', h: Hk+Num}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:backspace$$', h: '$$mdi:apple-keyboard-shift$$'}
-  - {t: '$$mdi:keyboard-space$$', h: Brd+Sys}
+  - {t: '$$mdi:keyboard-space$$', h: Sys+Nav}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  Sym+Num:
+  Hk+Num:
   - $$mdi:keyboard-esc$$
   - F1
   - F2
@@ -130,7 +130,7 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  Brd+Sys:
+  Sys+Nav:
   - $$mdi:bluetooth-off$$
   - $$mdi:brightness-7$$
   - $$mdi:brightness-5$$

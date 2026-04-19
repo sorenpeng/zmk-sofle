@@ -40,7 +40,7 @@ layers:
   - L
   - {t: ;, s: ':'}
   - {t: '''', h: '$$mdi:apple-keyboard-shift$$', s: '"'}
-  - $$mdi:apple-keyboard-command$$
+  - $$mdi:apple-keyboard-control$$
   - {t: Z, h: '$$mdi:apple-keyboard-option$$'}
   - X
   - C
@@ -54,17 +54,17 @@ layers:
   - {t: /, h: '$$mdi:apple-keyboard-option$$', s: '?'}
   - $$mdi:apple-keyboard-control$$
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: 'Alt+Ctl+$$mdi:apple-keyboard-command$$', h: '$$mdi:gesture-tap-hold$$'}
-  - Ins
-  - PRINTSCREEN
-  - {t: '$$mdi:keyboard-tab$$', h: '$$mdi:apple-keyboard-control$$'}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:keyboard-tab$$', h: '$$mdi:apple-keyboard-command$$'}
   - {t: '$$mdi:keyboard-return$$', h: Sym+Num}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:backspace$$', h: '$$mdi:apple-keyboard-shift$$'}
   - {t: '$$mdi:keyboard-space$$', h: Brd+Sys}
-  - Ctl+$$mdi:keyboard-space$$
-  - {t: Ctl+Sft+-, s: Ctl+Sft+_}
-  - Ctl+Z
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   Sym+Num:
   - $$mdi:keyboard-esc$$
   - F1
@@ -131,56 +131,56 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   Brd+Sys:
-  - '&soft_off'
-  - {t: '$$mdi:backup-restore$$', type: bootloader}
-  - RGB EFF
-  - RGB TOG
-  - RGB BRD
-  - RGB BRI
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {h: '$$mdi:arrow-up-bold$$', s: '$$mdi:bluetooth-connect$$'}
-  - {h: '$$mdi:arrow-down-bold$$', s: '$$mdi:bluetooth-connect$$'}
-  - {t: '$$mdi:toggle-switch$$', h: '$$mdi:bluetooth$$', s: '$$mdi:usb$$'}
   - $$mdi:bluetooth-off$$
-  - {t: '$$mdi:backup-restore$$', type: bootloader}
-  - '&soft_off'
+  - $$mdi:brightness-7$$
+  - $$mdi:brightness-5$$
+  - PREVIOUS
+  - PLAY PAUSE
+  - $$mdi:skip-next$$
   - {t: '$$mdi:transfer$$', type: trans}
-  - RGB SPI
+  - $$mdi:volume-off$$
   - $$mdi:volume-low$$
   - $$mdi:volume-high$$
-  - $$mdi:volume-off$$
-  - $$mdi:brightness-5$$
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - BT CLR ALL
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
   - HOME
   - PG DN
   - PG UP
   - END
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
-  - $$mdi:apple-keyboard-caps$$
-  - {t: '$$mdi:transfer$$', type: trans}
-  - RGB SPD
-  - $$mdi:skip-previous$$
-  - $$mdi:skip-next$$
-  - PLAY PAUSE
-  - $$mdi:brightness-7$$
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:arrow-left-bold$$
   - $$mdi:arrow-down-bold$$
   - $$mdi:arrow-up-bold$$
   - $$mdi:arrow-right-bold$$
-  - {t: '$$mdi:transfer$$', type: trans}
-  - $$mdi:backspace-reverse-outline$$
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - RGB HUD
-  - RGB HUI
-  - RGB SAD
-  - RGB SAI
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - $$mdi:apple-keyboard-shift$$
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - Ctl+$$mdi:keyboard-tab$$
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - Ctl+Sft+$$mdi:keyboard-tab$$
-  - {t: '$$mdi:transfer$$', type: trans}
+  - Ctl+$$mdi:keyboard-tab$$
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}

@@ -73,11 +73,17 @@ jobs:
             echo "name=${{ matrix.board }}-${{ matrix.shield }}" >> $GITHUB_OUTPUT
           fi
 
+      - name: Stage firmware artifact
+        run: |
+          mkdir -p artifact
+          cp build/zephyr/zmk.uf2 "artifact/${{ steps.artifact.outputs.name }}.uf2"
+
       - name: Upload firmware
         uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.artifact.outputs.name }}
-          path: build/zephyr/zmk.uf2
+          path: artifact/${{ steps.artifact.outputs.name }}.uf2
+          compression-level: 0
 
   fallback:
     if: failure()
@@ -156,11 +162,17 @@ jobs:
             echo "name=${{ matrix.board }}-${{ matrix.shield }}-fallback" >> $GITHUB_OUTPUT
           fi
 
+      - name: Stage firmware artifact (fallback)
+        run: |
+          mkdir -p artifact
+          cp build/zephyr/zmk.uf2 "artifact/${{ steps.artifact.outputs.name }}.uf2"
+
       - name: Upload firmware (fallback)
         uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.artifact.outputs.name }}
-          path: build/zephyr/zmk.uf2
+          path: artifact/${{ steps.artifact.outputs.name }}.uf2
+          compression-level: 0
 
   merge:
     if: always()

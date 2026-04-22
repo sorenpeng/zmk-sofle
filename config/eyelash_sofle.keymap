@@ -19,7 +19,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TD_CAPS_WORD";
             #binding-cells = <0>;
-            bindings = <&caps_word>, <&kp CAPSLOCK>;
+            bindings = <&kp CAPSLOCK>, <&caps_word>;
         };
 
         mt_z_pref: mod_tap_z_preferred {
@@ -57,7 +57,7 @@
 &td_caps_word             &kp Q                  &kp W         &kp E         &kp R                        &kp T                   &trans  &kp Y                     &kp U         &kp I         &kp O         &kp P                           &kp BACKSLASH
 &mt LEFT_SHIFT BACKSPACE  &kp A                  &kp S         &kp D         &kp F                        &kp G                   &trans  &kp H                     &kp J         &kp K         &kp L         &kp SEMICOLON                   &mt RIGHT_SHIFT SINGLE_QUOTE
 &kp LEFT_CONTROL          &mt_z_pref LEFT_ALT Z  &kp X         &kp C         &kp V                        &kp B                   &trans  &kp N                     &kp M         &kp COMMA     &kp PERIOD    &mt_slash_pref RIGHT_ALT SLASH  &kp RIGHT_CONTROL
-&trans                    &none                  &none         &kp GLOBE     &lt_layer_preferred 1 ENTER  &mt LEFT_COMMAND TAB    &trans  &mt LEFT_SHIFT BACKSPACE  &lt 2 SPACE   &none         &none         &none
+&trans                    &none                  &none         &none         &lt_layer_preferred 1 ENTER  &mt LEFT_COMMAND TAB    &trans  &mt LEFT_SHIFT BACKSPACE  &lt 2 SPACE   &none         &none         &none
             >;
         };
 

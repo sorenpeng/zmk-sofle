@@ -142,7 +142,7 @@ layers:
   - $$mdi:volume-low$$
   - $$mdi:volume-high$$
   - {h: '$$mdi:arrow-up-bold$$', s: '$$mdi:bluetooth-connect$$'}
-  - {h: '$$mdi:arrow-up-bold$$', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '$$mdi:arrow-down-bold$$', s: '$$mdi:bluetooth-connect$$'}
   - BT CLR ALL
   - {t: '`', s: '~'}
   - '!'
